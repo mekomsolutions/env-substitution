@@ -1,16 +1,54 @@
-# Substatution ENV variables place holders recusively in a target folder.
-This a simple node js script that will recusively substitute placeholder in the form of `${ENV_VAR}` or `$ENV_VAR` in the folder set in `FILE_PATH` to use.
+# env-substitution
 
-```$ export FILE_PATH=<path to folder to substitute>```
+Simple Node JS js script that will recusively substitute placeholders in the form of `${ENV_VAR}` or `$ENV_VAR` in the folder set in `FILE_PATH`.
 
-Export and ENV variables you have in the target folder for example
+Only files with the extensions as set in [allowedExtensions](https://github.com/mekomsolutions/env-substitution/blob/72000fa08aec24c3dc606db78517ebdbad7f1235/cmd.js#L4) will be taken into account:
+```js
+const allowedExtensions = ['.json', '.yml', '.yaml', '.csv', '.xml', '.properties', '.txt'];
+```
 
-```$ export ENV_VAR=testenv```
+# Quick start
 
-Then run
+Set the source folder to search in:
 
-```$ node cmd.js```
+`$ export FILE_PATH=<path to folder to substitute>`
 
-To build the docker image 
+Eg:
 
-```$ docker build . -t mekomsolutions/env-substitution ```
+```
+├── my_source_folder
+│   └── folder1
+│       ├── file.txt - "Hello $WORLD"
+```
+
+Export the variables values to be substituted:
+
+`$ export ENV_VAR=testenv`
+
+Eg:
+
+```
+export WORLD=Uganda!
+```
+
+Run:
+
+`$ node cmd.js`
+
+All references to `ENV_VAR`are now replaced by `testenv`
+
+Eg:
+
+
+```
+├── my_source_folder
+│   └── folder1
+│       ├── file.txt - "Hello Uganda!"
+```
+
+
+# Build Docker image
+
+To build the docker image
+
+`$ docker build . -t mekomsolutions/env-substitution`
