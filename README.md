@@ -47,8 +47,8 @@ Eg:
 ```
 
 
-# Build Docker image
+# Locally build Docker image
 
-To build the docker image
+Though this project is already covered by a [GitHub Actions workflow](./.github/workflows/build.yml) which builds and publishes the Docker image, you can build it locally with the following command:
 
 `$ docker build . -t mekomsolutions/env-substitution`
