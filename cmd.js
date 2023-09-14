@@ -16,18 +16,18 @@ const processDirs = (dirPath) => {
             processDirs(itemAbsPath);
         } else {
             if (allowedExtensions.includes(path.extname(itemAbsPath))) {
-                fileEnvsubst(itemAbsPath);
+                fileEnvSubstitution(itemAbsPath);
             }
         }
     });
 };
 
-const fileEnvsubst = (itemAbsPath) => {
+const fileEnvSubstitution = (itemAbsPath) => {
     let hydratedTemplate = fs.readFileSync(itemAbsPath, 'utf8');
 
     Object.entries(process.env).forEach(([name, value]) => {
         if (typeof value !== 'string') {
-            // stringifying strings adds surrounding dquotes; we don't want that
+            // stringify strings adds surrounding quotes; we don't want that
             value = JSON.stringify(value)
         }
 
@@ -41,17 +41,21 @@ const fileEnvsubst = (itemAbsPath) => {
     fs.writeFileSync(itemAbsPath, hydratedTemplate);
 };
 
-const generateClientSecrets = (clients) => {
+const generateClientUuidAndSecrets = (clients) => {
     for (let client of clients) {
         
         const key = `${client.toUpperCase()}_CLIENT_SECRET`;
         if(!(key in process.env)){
             process.env[key] = randomUUID();
         }
-       
+
+        const clientUuidKey = `${client.toUpperCase()}_CLIENT_UUID`;
+        if(!(clientUuidKey in process.env)){
+            process.env[clientUuidKey] = randomUUID();
+        }
     }
 }
 
-generateClientSecrets(clients)
+generateClientUuidAndSecrets(clients);
 
 processDirs(process.env.FILE_PATH);
