@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path')
 const { randomUUID } = require('crypto');
-const allowedExtensions = ['.json', '.yml', '.yaml', '.csv', '.xml', '.properties', '.txt'];
+const allowedExtensions = ['.json', '.yml', '.yaml', '.csv', '.xml', '.properties', '.txt', '.html', '.htm'];
 let clients = [];
 if (process.env.CLIENTS) {
     clients = process.env.CLIENTS.split(',');
